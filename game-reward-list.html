@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>RapViet Game - Danh sách Trúng Giải | VieON</title>
+  <meta
+    name="description"
+    content="Danh sách Trúng Giải Game RapViet mùa 2. Đừng bỏ lỡ RapViet mùa 2 trên VieON, với nhiều bản hit và những món quà bất ngờ từ Game Show."
+  />
+  <link rel="canonical" href="https://vieon.vn/phim-hay/"/>
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/swiper@7/swiper-bundle.min.css"
+  />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+  <meta name="googlebot" content="noindex,follow"/>
+  <meta name="robots" content="noindex,follow"/>
+  <style>
+      html {
+          overflow: hidden;
+      }
+      body {
+          font-family: 'Open Sans', sans-serif;
+          padding: 36px 0 0 0;
+          position: relative;
+      }
+
+      .wrapper {
+          background: #111111;
+          border: 1px solid rgba(155, 155, 155, 0.29);
+          box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.75);
+          min-height: calc(100vh - 120px);
+          padding: 46px 20px;
+      }
+
+      #loading {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: #00000080;
+          z-index: 10;
+      }
+
+      .hide {
+          display: none;
+      }
+
+      .column {
+          width: 100%;
+      }
+
+      .title {
+          background: linear-gradient(90deg, #DA9E1C 0%, #ECBD57 100%);
+          clip-path: polygon(3% 0, 97% 0, 100% 50%, 97% 100%, 3% 100%, 0 50%);
+          font-weight: 800;
+          font-size: 18px;
+          line-height: 16px;
+          margin-left: auto;
+          margin-right: auto;
+          margin-top: -68px;
+          max-width: 420px;
+          text-align: center;
+          padding: 14px 5px;
+          position: relative;
+          z-index: 1;
+      }
+
+      .loading, .error {
+          text-align: center;
+          color: #fff;
+      }
+
+      /*/ Clear floats after the columns /*/
+      .row {
+          display: flex;
+          max-width: 100%;
+          position: relative;
+      }
+
+      /*.row:after {
+        content: '';
+        display: table;
+        clear: both;
+      }*/
+
+      .scroll-menu {
+          width: 100%;
+      }
+
+      .swiper {
+          margin: 22px;
+          position: unset;
+      }
+
+      .swiper-wrapper {
+          padding: 2px 0;
+      }
+
+      .swiper .swiper-slide {
+          width: max-content;
+      }
+
+      .swiper .swiper-slide:not(:last-child) {
+          margin-right: 8px;
+      }
+
+      .container {
+          padding: 0 22px;
+          position: relative;
+      }
+
+      .swiper .swiper-button-prev .swiper-button-disabled::after,
+      .swiper .swiper-button-next .swiper-button-disabled::after {
+          color: #323232;
+      }
+
+      .swiper .swiper-button-prev {
+          left: 0;
+      }
+
+      .swiper .swiper-button-next {
+          right: 0;
+      }
+
+      .swiper .swiper-button-prev::after,
+      .swiper .swiper-button-next::after {
+          color: #fff;
+          font-size: 19px;
+      }
+
+      .scroll-menu button {
+          color: #cccccc;
+          font-weight: 500;
+          font-size: 14px;
+          line-height: 11px;
+          padding: 10px 27px;
+          border-radius: 50px;
+          border: 1px solid #646464;
+          text-align: center;
+          transition: all 0.25s ease;
+          cursor: pointer;
+          background-color: transparent;
+      }
+
+      .scroll-menu button.active {
+          border-color: #DA9E1C;
+          background: linear-gradient(90deg, #DA9E1C 0%, #ECBD57 100%);
+          color: #47370D;
+          font-weight: bold;
+      }
+
+      .scroll-menu button:hover {
+          border-color: #DA9E1C;
+          background: linear-gradient(90deg, #DA9E1C 0%, #ECBD57 100%);
+          color: #47370D;
+      }
+
+      .content {
+          max-height: calc(100vh - 110px);
+          overflow: hidden auto;
+          padding: 0 42px;
+      }
+
+      .content::-webkit-scrollbar-track {
+          -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+          border-radius: 10px;
+          background-color: transparent;
+      }
+
+      .content::-webkit-scrollbar {
+          width: 8px;
+          background-color: transparent;
+      }
+
+      .content::-webkit-scrollbar-thumb {
+          border-radius: 10px;
+          -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+          background-color: #555;
+      }
+
+      .content__list {
+          padding: 0;
+          margin: 0;
+      }
+
+      .content__list li {
+          list-style: none;
+          display: flex;
+          align-items: center;
+          padding: 7px 10px;
+          position: relative;
+      }
+
+      .content__list li:nth-child(odd) {
+          background-color: rgba(78, 203, 113, 0.1);
+      }
+
+      .item__image {
+          border-radius: 100%;
+          width: 58px;
+          height: 58px;
+          padding: 2px;
+          border: 1px solid #4ECB71;
+          position: relative;
+          overflow: hidden;
+      }
+
+      .item__image .custom {
+          width: 54px;
+          height: 54px;
+          box-sizing: border-box;
+          padding-bottom: 100%;
+          position: relative;
+      }
+
+      .item__image img {
+          width: 100%;
+          height: auto;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+      }
+
+      .item__info,
+      .item__award {
+          display: flex;
+          flex-direction: column;
+      }
+
+      .item__info {
+          max-width: 300px;
+      }
+
+      .item__stt {
+          margin-right: 20px;
+          font-weight: bold;
+          font-size: 20px;
+          line-height: 24px;
+          color: #FFFFFF;
+      }
+
+      .item__info {
+          margin-left: 20px;
+      }
+
+      .item__info .name,
+      .item__info .description {
+          display: block;
+      }
+
+      .item__info .name {
+          width: 100%;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          font-weight: 500;
+          font-size: 16px;
+          line-height: 140%;
+          color: #0AD418;
+      }
+
+      .item__info .description {
+          width: 100%;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          font-size: 14px;
+          color: #DEDEDE;
+      }
+
+      .item__award {
+          color: #DEDEDE;
+          font-weight: 600;
+          font-size: 14px;
+          line-height: 14px;
+          padding: 17px;
+          border: 0.6px solid #DEDEDE;
+          border-radius: 4px;
+          position: absolute;
+          right: 18px;
+          top: 50%;
+          transform: translate(0, -50%);
+      }
+
+      .empty-status .box {
+          position: relative;
+      }
+
+      .empty-status .box img {
+          width: 100%;
+          height: auto;
+      }
+
+      .empty-status .text {
+          font-size: 32px;
+          line-height: 36px;
+          text-align: center;
+          color: #DA9E1C;
+          text-shadow: 0px 0px 9px #DA9E1C;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+      }
+
+      @media screen and (min-width: 767px) and (max-width: 1280px) {
+          .empty-status .box img {
+              height: 500px;
+          }
+      }
+
+      @media screen and (max-width: 767px) {
+          .wrapper {
+              padding: 32px 0;
+          }
+
+          .title {
+              font-size: 16px;
+              margin-top: -48px;
+              padding-top: 8px;
+              padding-bottom: 8px;
+          }
+
+          .container {
+              padding: 0;
+          }
+
+          .scroll-menu {
+              width: 100%;
+              margin-top: 14px;
+          }
+
+          .scroll-menu .swiper {
+              margin: 0;
+              padding: 0 16px 0 16px;
+          }
+
+          .scroll-menu button {
+              padding: 6px 12px;
+              border-radius: 14px;
+              font-size: 10px;
+          }
+
+          .content {
+              padding: 20px 0 0 0;
+          }
+
+          .scroll-menu::-webkit-scrollbar {
+              height: 0;
+          }
+
+          .item__award {
+              font-size: 11px;
+          }
+
+          .item__stt {
+              margin-right: 10px;
+              font-size: 16px;
+          }
+
+          .item__image {
+              width: 48px;
+              height: 48px;
+          }
+
+          .item__info {
+              width: 100px;
+              margin-left: 10px;
+          }
+
+          .swiper .swiper-button-next, .swiper .swiper-button-prev {
+              display: none;
+          }
+
+          .empty-status .text {
+              font-size: 18px;
+              margin: auto;
+              line-height: 24px;
+          }
+
+          .empty-status .box img {
+              height: 330px;
+          }
+
+      }
+
+      @media screen and (max-width: 480px) {
+          .title {
+              margin-left: 36px;
+              margin-right: 36px;
+          }
+      }
+  </style>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "item": {
+            "@id": "https://vieon.vn",
+            "name": "VieON"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "item": {
+            "@id": "https://vieon.vn/phim-hay/",
+            "name": "Phim Hay"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "item": {
+            "@id": "",
+            "name": "danh sách"
+          }
+        }
+      ]
+    }
+  </script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Corporation",
+      "name": "VieON",
+      "url": "https://vieon.vn",
+      "sameAs": [
+        "https://vieon.vn/",
+        "https://www.facebook.com/vieonofficial",
+        "https://www.linkedin.com/company/vieon",
+        "https://www.instagram.com/vieon.official/",
+        "https://www.youtube.com/VieONChannel/",
+        "https://www.youtube.com/VieChannelHTV2/",
+        "https://en.wikipedia.org/wiki/DatVietVAC",
+        "https://vi.wikipedia.org/wiki/VieON",
+        "https://wikitia.com/wiki/VieON",
+        "https://vi.wikipedia.org/wiki/%E1%BB%A8ng_d%E1%BB%A5ng_OTT",
+        "https://vi.wikipedia.org/wiki/Rap_Vi%E1%BB%87t",
+        "https://vietnaminsider.vn/vietnams-leading-entertainment-group-announces-the-launch-of-its-modern-streaming-platform-vieon/",
+        "https://apps.apple.com/vn/app/id1357819721",
+        "https://play.google.com/store/apps/details?id=vieon.phim.tv"
+      ]
+    }
+  </script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "url": "https://vieon.vn",
+      "logo": "https://static.vieon.vn/vieon-web-v4/assets/img/logo.svg",
+      "contactPoint": [
+        {
+          "@type": "ContactPoint",
+          "telephone": "1800 599920",
+          "contactType": "customer service",
+          "areaServed": "VN",
+          "availableLanguage": "Vietnamese",
+          "contactOption": "TollFree"
+        }
+      ]
+    }
+  </script>
+  <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "WebSite",
+      "url": "https://vieon.vn/",
+      "name": "VieON",
+      "description": "Phim Bộ Hàn Quốc, Trung Quốc Mới Nhất Phim Penthouse 2, cuoc chien thuong luu, Bản năng Yêu, Vẻ Đẹp Đích Thực, Mouse kẻ săn người xem. Xem 24/7 Mọi Lúc Mọi Nơi"
+    }
+  </script>
+
+  <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
+
+</head>
+
+<body>
+<div class="wrapper">
+  <div class="row">
+    <div class="column">
+      <div class="title">Danh sách trúng thưởng</div>
+      <div class="scroll-menu">
+        <div class="container">
+          <div class="swiper">
+            <!-- Additional required wrapper -->
+            <div class="swiper-wrapper" id="listCampaigns">
+              <!-- Slides -->
+            </div>
+            <!-- If we need navigation buttons -->
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+          </div>
+        </div>
+      </div>
+      <div class="content" id="content"></div>
+    </div>
+    <div class="hide" id="loading"/>
+  </div>
+
+</div>
+<script>
+
+
+  setTimeout(() => {
+    const box = document.querySelector('.box')
+    const wrapper = document.querySelector('.wrapper')
+    if (box) {
+      box.style.border = '1px solid rgba(155, 155, 155, 0.29)'
+      wrapper.style.border = 'unset'
+    }
+  }, 300)
+
+  const swiper = new Swiper('.swiper', {
+    // Optional parameters
+    slidesPerView: 'auto',
+    observer: true,
+    observeParents: true,
+
+    // Navigation arrows
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+  })
+
+  const EVN = { TESTING: 'testing' }
+  const AVATAR_DEFAULT = './avatar-default.svg'
+  const DOMAIN_API = {
+    TESTING: 'https://testing-game-api.vieon.vn',
+    PROD: 'https://game-api.vieon.vn',
+  }
+
+  function getQueryVariable (variable) {
+    const query = window.location.search.substring(1)
+    const vars = query.split('&')
+    for (let i = 0; i < vars.length; i++) {
+      const pair = vars[i].split('=')
+      if (decodeURIComponent(pair[0]) == variable) {
+        return decodeURIComponent(pair[1])
+      }
+    }
+  }
+
+  const envParam = getQueryVariable('env')
+  const domainApi = envParam === EVN.TESTING ? DOMAIN_API.TESTING : DOMAIN_API.PROD
+  const fakeList = [
+    { content_id: 1, phone: '0909123456', email: 'aaa@vieon.vn', award: 10000000000, image: AVATAR_DEFAULT },
+    { content_id: 2, phone: '0909123456', email: 'aaa@vieon.vn', award: 10000000000, image: AVATAR_DEFAULT },
+    { content_id: 3, phone: '0909123456', email: 'aaa@vieon.vn', award: 10000000000, image: AVATAR_DEFAULT },
+    { content_id: 4, phone: '', email: 'aaa@vieon.vn213123123123123123123123', award: 10000000000 },
+    { content_id: 5, phone: '0909123456', email: 'aaa@vieon.vn', award: 10000000000 },
+    { content_id: 6, phone: '', email: 'aaa@vieon.vn', award: 10000000000 },
+    { content_id: 7, phone: '0909123456', email: 'aaa@vieon.vn', award: 10000000000 },
+    { content_id: 8, phone: '0909123456', email: 'aaa@vieon.vn', award: 10000000000 },
+    { content_id: 9, phone: '', email: 'aaa@vieon.vn', award: 10000000000 },
+    { content_id: 10, phone: '0909123456', email: 'aaa@vieon.vn', award: 10000000000 },
+    { content_id: 11, phone: '0909123456', email: 'aaa@vieon.vn', award: 10000000000 },
+    { content_id: 12, phone: '0909123456', email: 'aaa@vieon.vn', award: 10000000000 },
+    { content_id: 13, phone: '0909123456', email: 'aaa@vieon.vn', award: 10000000000 },
+    { content_id: 14, phone: '0909123456', email: 'aaa@vieon.vn', award: 10000000000 },
+    { content_id: 15, phone: '0909123456', email: 'aaa@vieon.vn', award: 10000000000 },
+    { content_id: 16, phone: '0909123456', email: 'aaa@vieon.vn', award: 10000000000 },
+    { content_id: 17, phone: '0909123456', email: 'aaa@vieon.vn', award: 10000000000 },
+    { content_id: 18, phone: '0909123456', email: 'aaa@vieon.vn', award: 10000000000 },
+    { content_id: 19, phone: '0909123456', email: 'aaa@vieon.vn', award: 10000000000 },
+    { content_id: 20, phone: '0909123456', email: 'aaa@vieon.vn', award: 10000000000 },
+    { content_id: 21, phone: '0909123456', email: 'aaa@vieon.vn', award: 10000000000 },
+    { content_id: 22, phone: '0909123456', email: 'aaa@vieon.vn', award: 10000000000 },
+    { content_id: 23, phone: '0909123456', email: 'aaa@vieon.vn', award: 10000000000 },
+    { content_id: 24, phone: '0909123456', email: 'aaa@vieon.vn', award: 10000000000 },
+    { content_id: 25, phone: '0909123456', email: 'aaa@vieon.vn', award: 10000000000 },
+    { content_id: 26, phone: '0909123456', email: 'aaa@vieon.vn', award: 10000000000 },
+    { content_id: 27, phone: '0909123456', email: 'aaa@vieon.vn', award: 10000000000 },
+    { content_id: 28, phone: '0909123456', email: 'aaa@vieon.vn', award: 10000000000 },
+    { content_id: 29, phone: '0909123456', email: 'aaa@vieon.vn', award: 10000000000 },
+    { content_id: 30, phone: '0909123456', email: 'aaa@vieon.vn', award: 10000000000 },
+    { content_id: 31, phone: '0909123456', email: 'aaa@vieon.vn', award: 10000000000 },
+    { content_id: 32, phone: '0909123456', email: 'aaa@vieon.vn', award: 10000000000 },
+    { content_id: 33, phone: '0909123456', email: 'aaa@vieon.vn', award: 10000000000 },
+    { content_id: 34, phone: '0909123456', email: 'aaa@vieon.vn', award: 10000000000 },
+    { content_id: 35, phone: '0909123456', email: 'aaa@vieon.vn', award: 10000000000 },
+    { content_id: 36, phone: '0909123456', email: 'aaa@vieon.vn', award: 10000000000 },
+    { content_id: 37, phone: '0909123456', email: 'aaa@vieon.vn', award: 10000000000 },
+    { content_id: 38, phone: '0909123456', email: 'aaa@vieon.vn', award: 10000000000 },
+  ]
+
+  const renderListWinners = (list) => {
+    let elmList = ''
+    let empty = ''
+    if (list && list.length > 0) {
+      list.map(
+        (item, i) =>
+          (elmList += `<li class="item">
+                <div class="item__stt">${i + 1}.</div>
+                <div class="item__image"><img src=${item.image || AVATAR_DEFAULT} alt="" /></div>
+                <div class="item__info">
+                  <a title="${item.name || item.phone || item.email}" class="name">${
+            item.name || item.phone || item.email
+          }
+                  </a>
+                  <span class="description">${item.phone || item.email}</span>
+                </div>
+              <div class="item__award">${new Intl.NumberFormat().format(item.award || 0)} đ</div>
+            </li>`)
+      )
+    } else {
+      empty = `<div class="empty-status">
+        <div class="box">
+          <img src='https://static2.vieon.vn/testing-vieon-web-v5/assets/img/rap-viet/bg-rapviet-body.png' />
+          <div class="text">DANH SÁCH ĐANG ĐƯỢC CẬP NHẬT</div>
+        </div>
+      </div>`
+    }
+
+    const listWinners = `<ul class="content__list" id="listWinners"> ${elmList} </ul>`
+    const emptyContainer = document.getElementById('content')
+    emptyContainer.innerHTML = empty || listWinners
+  }
+
+  const showLoading = (isShow) => {
+    const loadingEl = document.getElementById('loading')
+    if(isShow) loadingEl.classList.remove('hide')
+    else loadingEl.classList.add('hide')
+  }
+
+  const getListWinnersOfCampaign = async (contentId) => {
+    if (contentId === 'FAKE_ITEM') {
+      renderListWinners(fakeList)
+    } else if (contentId) {
+      showLoading(true)
+
+      const response = await fetch(`${domainApi}/quiz/result/${contentId}?limit=50&platform=web`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      if (!response.ok) {
+        renderListWinners([])
+      } else {
+        const myJson = await response.json()
+        const results = myJson.result || []
+        renderListWinners(results)
+      }
+
+      showLoading(false)
+    }
+  }
+
+  const onClickMenuCampaign = (id) => {
+    getListWinnersOfCampaign(id)
+    const listCampaigns = document.querySelector('#listCampaigns')
+    listCampaigns.getElementsByClassName('active')[0].className = null
+    if (!document.getElementById(id).classList.contains('active')) {
+      document.getElementById(id).className = 'active'
+    }
+  }
+
+  const appendEventClickMenu = () => {
+    const listCampaigns = document.querySelector('#listCampaigns ')
+    if (listCampaigns && listCampaigns.children.length > 0) {
+      for (let i = 0; i < listCampaigns.children.length; i++) {
+        listCampaigns.children[i].addEventListener('click', (e) => {
+          onClickMenuCampaign(e.target.id)
+        })
+      }
+    }
+  }
+
+  const renderListCampaigns = (list, itemActive, activeIndex) => {
+
+    const listCampaigns = document.getElementById('listCampaigns')
+    let listElms = ''
+    if (list && list.length > 0) {
+      list.map((item) => {
+        listElms += `<div class="swiper-slide"><button type='button' id="${item.content_id}" ${
+          item.content_id === itemActive?.content_id ? `class="active"` : ''
+        } title="${item.campaign_name}">${item.campaign_name}</button></div>`
+      })
+    } else {
+      listElms = `<div class="empty-status">Không có dữ liệu ...</div>`
+    }
+    listCampaigns.innerHTML = listElms
+
+    onScrollTabActiveToView(activeIndex)
+    appendEventClickMenu()
+  }
+
+  const onScrollTabActiveToView = (activeIndex) => {
+    swiper.slideTo(activeIndex || 0)
+  }
+
+  const getListCampaigns = async () => {
+    const listCampaigns = document.getElementById('listCampaigns')
+    listCampaigns.innerHTML = '<div class="empty-status">Đang tải dữ liệu ...</div>'
+    const response = await fetch(`${domainApi}/quiz/result-campaign?platform=web`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    if (!response.ok) {
+      listCampaigns.innerHTML = '<div class="empty-status">Có lỗi xảy ra ...</div>'
+    }
+    const myJson = await response.json()
+    let results = myJson.result || []
+    const newResult = [...results].reverse()
+
+
+    let activeItem = (newResult || []).find(item => item?.campaign_active)
+    let activeIndex = (results || []).findIndex(item => activeItem?.campaign_id === item?.campaign_id)
+    activeIndex = activeIndex === -1 ? 0 : activeIndex
+    let campaignActive = results?.[activeIndex]
+
+    if(envParam === EVN.TESTING) {
+      const fakeItem = { ...results?.[0], content_id: 'FAKE_ITEM', campaign_name: 'Test Data' }
+      results = [fakeItem, ...results]
+    }
+
+    renderListCampaigns(results, campaignActive, activeIndex)
+    getListWinnersOfCampaign(campaignActive.content_id)
+  }
+  getListCampaigns()
+
+</script>
+</body>
+</html>

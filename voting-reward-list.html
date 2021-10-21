@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Voting - Danh sách Trúng Giải | VieON</title>
+  <meta
+    name="description"
+    content="Danh sách Trúng Giải Game RapViet mùa 2. Đừng bỏ lỡ RapViet mùa 2 trên VieON, với nhiều bản hit và những món quà bất ngờ từ Game Show."
+  />
+  <link rel="canonical" href="https://vieon.vn/phim-hay/"/>
+  <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
+  <link rel="stylesheet" href="./app.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+  <meta name="googlebot" content="noindex,follow"/>
+  <meta name="robots" content="noindex,follow"/>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "item": {
+            "@id": "https://vieon.vn",
+            "name": "VieON"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "item": {
+            "@id": "https://vieon.vn/phim-hay/",
+            "name": "Phim Hay"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "item": {
+            "@id": "",
+            "name": "danh sách"
+          }
+        }
+      ]
+    }
+  </script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Corporation",
+      "name": "VieON",
+      "url": "https://vieon.vn",
+      "sameAs": [
+        "https://vieon.vn/",
+        "https://www.facebook.com/vieonofficial",
+        "https://www.linkedin.com/company/vieon",
+        "https://www.instagram.com/vieon.official/",
+        "https://www.youtube.com/VieONChannel/",
+        "https://www.youtube.com/VieChannelHTV2/",
+        "https://en.wikipedia.org/wiki/DatVietVAC",
+        "https://vi.wikipedia.org/wiki/VieON",
+        "https://wikitia.com/wiki/VieON",
+        "https://vi.wikipedia.org/wiki/%E1%BB%A8ng_d%E1%BB%A5ng_OTT",
+        "https://vi.wikipedia.org/wiki/Rap_Vi%E1%BB%87t",
+        "https://vietnaminsider.vn/vietnams-leading-entertainment-group-announces-the-launch-of-its-modern-streaming-platform-vieon/",
+        "https://apps.apple.com/vn/app/id1357819721",
+        "https://play.google.com/store/apps/details?id=vieon.phim.tv"
+      ]
+    }
+  </script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "url": "https://vieon.vn",
+      "logo": "https://static.vieon.vn/vieon-web-v4/assets/img/logo.svg",
+      "contactPoint": [
+        {
+          "@type": "ContactPoint",
+          "telephone": "1800 599920",
+          "contactType": "customer service",
+          "areaServed": "VN",
+          "availableLanguage": "Vietnamese",
+          "contactOption": "TollFree"
+        }
+      ]
+    }
+  </script>
+  <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "WebSite",
+      "url": "https://vieon.vn/",
+      "name": "VieON",
+      "description": "Phim Bộ Hàn Quốc, Trung Quốc Mới Nhất Phim Penthouse 2, cuoc chien thuong luu, Bản năng Yêu, Vẻ Đẹp Đích Thực, Mouse kẻ săn người xem. Xem 24/7 Mọi Lúc Mọi Nơi"
+    }
+  </script>
+
+  <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
+
+</head>
+
+<body>
+<div class="wrapper">
+  <div class="title"><span>Danh sách trúng thưởng</span></div>
+  <div class="wrapper-container border-corner-round">
+    <div class="row">
+      <div class="column">
+        <div class="scroll-menu">
+          <div class="container">
+            <div class="swiper">
+              <!-- Additional required wrapper -->
+              <div class="swiper-wrapper" id="chapterList">
+                <!-- Slides -->
+              </div>
+              <!-- If we need navigation buttons -->
+              <div class="swiper-button-prev"></div>
+              <div class="swiper-button-next"></div>
+            </div>
+          </div>
+        </div>
+        <div class="content" id="content">
+          <!-- <div class="content-item"><img src="/bg-content-voting.png" alt=""></div> -->
+
+          <div class="empty-status" id="empty-el">
+            <div class="box">
+              <img src="./bg-empty-voting.png">
+              <div class="text">
+                <div>DANH SÁCH <br/>ĐANG ĐƯỢC CẬP NHẬT</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="content__list" id="winnerList"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+
+  const swiper = new Swiper('.swiper', {
+    // Optional parameters
+    slidesPerView: 'auto',
+    observer: true,
+    observeParents: true,
+
+    // Navigation arrows
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+  })
+
+  const EVN = { TESTING: 'testing' }
+  const AVATAR_DEFAULT = './avatar-default.svg'
+  const DOMAIN_API = {
+    TESTING: 'https://testing-game-api.vieon.vn',
+    PROD: 'https://game-api.vieon.vn',
+  }
+
+  function getQueryVariable (variable) {
+    const query = window.location.search.substring(1)
+    const vars = query.split('&')
+    for (let i = 0; i < vars.length; i++) {
+      const pair = vars[i].split('=')
+      if (decodeURIComponent(pair[0]) == variable) {
+        return decodeURIComponent(pair[1])
+      }
+    }
+  }
+
+  const envParam = getQueryVariable('env')
+  const domainApi = envParam === EVN.TESTING ? DOMAIN_API.TESTING : DOMAIN_API.PROD
+  const fakeList = [{
+    'lucky_draw_number': 159357,
+    'campaign_id': 1,
+    'question_id': 1,
+    'option_id': 1,
+    'user_id': '5ba9a6f5-e4b0-e9b1-45c7-ada3b278c295',
+    'name': '090***196',
+    'phone': '090***196',
+    'email': '',
+    'ranking': 1
+  }, {
+    'lucky_draw_number': 123456,
+    'campaign_id': 1,
+    'question_id': 1,
+    'option_id': 1,
+    'user_id': 'b5c68eca-f5be-f263-404d-162af6d271a9',
+    'name': '123123',
+    'phone': '093***140',
+    'email': 'hoa.***dzones.vn ',
+    'ranking': 2
+  }, {
+    'lucky_draw_number': 123453,
+    'campaign_id': 1,
+    'question_id': 1,
+    'option_id': 1,
+    'user_id': 'f54182bb-c7ac-d95c-b949-da904e7ca862',
+    'name': '034***535',
+    'phone': '034***535',
+    'email': '',
+    'ranking': 2
+  }, {
+    'lucky_draw_number': 13,
+    'campaign_id': 1,
+    'question_id': 1,
+    'option_id': 1,
+    'user_id': '237dfadd-4c51-7577-35b5-349e8b60ca31',
+    'name': '',
+    'phone': '093***702',
+    'email': '',
+    'ranking': 3
+  }, {
+    'lucky_draw_number': 159357,
+    'campaign_id': 1,
+    'question_id': 1,
+    'option_id': 1,
+    'user_id': '5ba9a6f5-e4b0-e9b1-45c7-ada3b278c295',
+    'name': '090***196',
+    'phone': '090***196',
+    'email': '',
+    'ranking': 1
+  }, {
+    'lucky_draw_number': 123456,
+    'campaign_id': 1,
+    'question_id': 1,
+    'option_id': 1,
+    'user_id': 'b5c68eca-f5be-f263-404d-162af6d271a9',
+    'name': '123123',
+    'phone': '093***140',
+    'email': 'hoa.***dzones.vn ',
+    'ranking': 2
+  }, {
+    'lucky_draw_number': 123453,
+    'campaign_id': 1,
+    'question_id': 1,
+    'option_id': 1,
+    'user_id': 'f54182bb-c7ac-d95c-b949-da904e7ca862',
+    'name': '034***535',
+    'phone': '034***535',
+    'email': '',
+    'ranking': 2
+  }, {
+    'lucky_draw_number': 13,
+    'campaign_id': 1,
+    'question_id': 1,
+    'option_id': 1,
+    'user_id': '237dfadd-4c51-7577-35b5-349e8b60ca31',
+    'name': '',
+    'phone': '093***702',
+    'email': '',
+    'ranking': 3
+  }, {
+    'lucky_draw_number': 159357,
+    'campaign_id': 1,
+    'question_id': 1,
+    'option_id': 1,
+    'user_id': '5ba9a6f5-e4b0-e9b1-45c7-ada3b278c295',
+    'name': '090***196',
+    'phone': '090***196',
+    'email': '',
+    'ranking': 1
+  }, {
+    'lucky_draw_number': 123456,
+    'campaign_id': 1,
+    'question_id': 1,
+    'option_id': 1,
+    'user_id': 'b5c68eca-f5be-f263-404d-162af6d271a9',
+    'name': '123123',
+    'phone': '093***140',
+    'email': 'hoa.***dzones.vn ',
+    'ranking': 2
+  }, {
+    'lucky_draw_number': 123453,
+    'campaign_id': 1,
+    'question_id': 1,
+    'option_id': 1,
+    'user_id': 'f54182bb-c7ac-d95c-b949-da904e7ca862',
+    'name': '034***535',
+    'phone': '034***535',
+    'email': '',
+    'ranking': 2
+  }, {
+    'lucky_draw_number': 13,
+    'campaign_id': 1,
+    'question_id': 1,
+    'option_id': 1,
+    'user_id': '237dfadd-4c51-7577-35b5-349e8b60ca31',
+    'name': '',
+    'phone': '093***702',
+    'email': '',
+    'ranking': 3
+  }]
+
+  let activeChapter = null
+
+  async function fetchApi ({ url, method }) {
+    const headers = { 'Content-Type': 'application/json' }
+    return fetch(url, { method: method || 'GET', headers }).then(async res => {
+      const myJson = await res.json()
+      return myJson
+    }).catch(errRes => {
+      console.log(errRes, url)
+      return { results: [] }
+    })
+  }
+
+  async function getCampaignList () {
+    const url = domainApi + '/voting/campaign?ui=012021&platform=web'
+    const response = await fetchApi({ url })
+    return response?.results || []
+  }
+
+  async function getChapterListById ({ id }) {
+    const url = domainApi + `/voting/${id}/question?ui=012021&platform=web`
+    const response = await fetchApi({ url })
+    return response?.results || []
+  }
+
+  async function getChapterList ({ campaignList }) {
+    const normalRound = campaignList?.[0]
+    const finalRound = campaignList?.[1]
+    let normalChapterList = await getChapterListById({ id: normalRound?.id })
+    let finalChapterList = await getChapterListById({ id: finalRound?.id })
+
+    if (!!normalRound?.status_enable) {
+      activeChapter = (normalChapterList || []).find(item => item?.status_enable)
+      finalChapterList = (finalChapterList || []).map(item => ({ ...item, status_enable: false }))
+    } else if (!!finalRound?.status_enable) {
+      activeChapter = (finalChapterList || []).find(item => item?.status_enable)
+      normalChapterList = (normalChapterList || []).map(item => ({ ...item, status_enable: false }))
+    }
+
+    if (!activeChapter) activeChapter = normalChapterList?.[0]
+
+    let chapterList = [...normalChapterList, ...finalChapterList]
+    if (envParam === EVN.TESTING) {
+      const fakeItem = { ...chapterList?.[0], id: 'FAKE_ITEM', content: 'Test Data' }
+      chapterList = [fakeItem, ...chapterList]
+    }
+
+    return { activeChapter, chapterList: chapterList }
+  }
+
+  async function getWinnerList ({ chapter }) {
+    if (chapter?.id === 'FAKE_ITEM') return fakeList
+    const url = domainApi + `/voting/${chapter?.id}/vote_winners?ui=012021&platform=web`
+    const winnerList = await fetchApi({ url })
+    return winnerList?.results || []
+  }
+
+  async function onClickChapter ({ chapter }) {
+    const winnerList = await getWinnerList({ chapter })
+
+    if ((winnerList || []).length === 0) {
+      showEmpty({ isShow: true })
+    } else {
+      renderWinnerList({ winnerList })
+    }
+
+    // Remove active
+    const activeEl = document.getElementById(activeChapter?.id)
+    activeEl.className = ''
+
+    //Set active
+    const chapterEl = document.getElementById(chapter?.id)
+    chapterEl.className = 'active'
+
+    activeChapter = chapter
+  }
+
+  function createChapterEl ({ chapter }) {
+    const chapterEL = document.createElement('div')
+    chapterEL.className = 'swiper-slide'
+
+    const button = document.createElement('button')
+    button.id = chapter?.id || ''
+    button.title = chapter?.content || ''
+    button.innerText = chapter?.content || ''
+    button.className = chapter?.status_enable ? 'active' : ''
+
+
+    const customDiv = document.createElement('div')
+    customDiv.className = 'custom'
+    const text = document.createElement('span')
+    text.className = 'text'
+    customDiv.appendChild(text)
+    button.appendChild(customDiv)
+    chapterEL.appendChild(button)
+
+    chapterEL.onclick = () => {
+      onClickChapter({ chapter })
+    }
+
+    return chapterEL
+  }
+
+  function createWinnerEL ({ winner, index }) {
+    const winnerEL = document.createElement('li')
+    winnerEL.className = 'item'
+    const innerHtml = `
+      <div class="item__stt">${index + 1}</div>
+      <div class="item__image"><img src=${winner?.avatar || './avatar-default.svg'} alt=""></div>
+      <div class="item__info">
+        <a title="0909123456" class="name">${winner?.name || winner?.phone || ''}</a>
+        <div class="description">${winner?.phone || ''}</div>
+      </div>
+    `
+
+    winnerEL.innerHTML = innerHtml
+
+    return winnerEL
+  }
+
+  function renderChapterList ({ chapterList, activeChapter }) {
+    const chapterListEL = document.getElementById('chapterList');
+    (chapterList || []).forEach(chapter => {
+      const chapterEL = createChapterEl({ chapter })
+      chapterListEL.appendChild(chapterEL)
+    })
+
+  }
+
+  function showEmpty ({ isShow }) {
+    const contentEl = document.getElementById('empty-el')
+    const winnerListEL = document.getElementById('winnerList')
+    const wrapperEL = document.querySelector('.wrapper')
+
+    if (!isShow) {
+      contentEl.classList.add('hide')
+      winnerListEL.classList.remove('hide')
+      wrapperEL.classList.remove('wrapper-empty')
+    } else {
+      contentEl.classList.remove('hide')
+      winnerListEL.classList.add('hide')
+      wrapperEL.classList.add('wrapper-empty')
+    }
+  }
+
+  function renderWinnerList ({ winnerList }) {
+    showEmpty({ isShow: false })
+    const contentEl = document.getElementById('content')
+    contentEl.classList.add('content-item')
+
+    const winnerListEL = document.getElementById('winnerList')
+    winnerListEL.innerHTML = '';
+
+    (winnerList || []).forEach((winner, index) => {
+      const winnerEL = createWinnerEL({ winner, index })
+      winnerListEL.appendChild(winnerEL)
+    })
+  }
+
+  async function main () {
+    const campaignList = await getCampaignList()
+    if (campaignList?.length === 0) {
+      //Show empty
+    } else {
+      const { activeChapter, chapterList } = await getChapterList({ campaignList })
+
+      if ((chapterList || [])?.length === 0) {
+        // Show Empty
+      } else {
+        // RENDER CHAPTER LIST
+        renderChapterList({ chapterList, activeChapter })
+        const winnerList = await getWinnerList({ chapter: activeChapter })
+        if ((winnerList || []).length === 0) {
+          //SHOW Empty winner list
+          showEmpty({ isShow: true })
+        } else {
+          renderWinnerList({ winnerList })
+        }
+      }
+    }
+  }
+
+  main()
+
+</script>
+</body>
+</html>
